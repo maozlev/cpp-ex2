@@ -18,19 +18,27 @@ namespace ariel{
     }
 
     void Board::post(unsigned int row, unsigned int col, Direction d, string message ){
-        if(flag == 0){
-            flag = col;
-            vector<char> v (col);
-            fill(v.begin(), v.end(), '_');
-            for (unsigned int  i = 0; i < col + message.length(); i++){
-                Main_Board.push_back(v);
-            }   
+        if(flag == 0){ // init the board
+            flag = 1;
+            vector<char> v;
+            if(d == Direction::Horizontal){
+                vector<char> v (col + message.length());
+                fill(v.begin(), v.end(), '_');
+                for (unsigned int  i = 0; i < row + message.length(); i++){
+                    Main_Board.push_back(v);
+                }
+            }
+            if(d == Direction::Vertical){
+                vector<char> v (col);
+                fill(v.begin(), v.end(), '_');
+                for (unsigned int  i = 0; i < row + message.length() ; i++){
+                    Main_Board.push_back(v);
+                }   
+            }
         }
         if(d == Direction::Horizontal){
 
             if(row > Main_Board.size()){
-                cout<<"1="<<row - Main_Board.size()<<endl;
-                cout<<"2="<<Main_Board[0].size()<<endl;
                 Resize_Board_rows(Main_Board, row - Main_Board.size(),message.length() ); //Main_Board[0].size()
             }
             if(col + message.length() > Main_Board[0].size())
@@ -59,26 +67,31 @@ namespace ariel{
     }
 
     string Board::read(unsigned int row, unsigned int col, Direction d, unsigned int len ){
-        // cout<<"hihihi"<<endl;
+        int add_to_word;
         string message_out;
         if(d == Direction::Horizontal){
+            add_to_word = len+col-Main_Board[0].size();
 
-            unsigned int size_string = 0;
             for (unsigned int i = col; i < col + len ; i++){
                 message_out+=Main_Board[row][i];
-                size_string++;
             }
-            return message_out;
+            while(add_to_word > 0){
+                message_out += '_';
+                add_to_word--;
+            }
         }
+    
         else if(d == Direction::Vertical){
-            unsigned int size_string = 0;
+            add_to_word = len+row-Main_Board.size();
             for (unsigned int i = row; i < row + len; i++){
                 message_out += Main_Board[i][col];
-                size_string++;
             }
-            return message_out;
+            while(add_to_word>0){
+                message_out+='_';
+                add_to_word--;
+            }
         }
-        return "loser";
+        return message_out;
     }
 
 
