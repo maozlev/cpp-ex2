@@ -10,8 +10,8 @@ using namespace std;
 
 namespace ariel{
     
-    void Resize_Board_rows(vector<vector<char>> &Board, unsigned int add_rows, unsigned int col);
-    void Resize_Board_cols(vector<vector<char>> &Board, unsigned int add_col, unsigned int row);
+    void Resize_Board_rows(vector<vector<char>> &Board, unsigned int row, unsigned int col);
+    void Resize_Board_cols(vector<vector<char>> &Board, unsigned int row, unsigned int col);
     
     Board::Board(){
         flag = 0;
@@ -41,8 +41,8 @@ namespace ariel{
             if(row > Main_Board.size()){
                 Resize_Board_rows(Main_Board, row - Main_Board.size(),message.length() ); //Main_Board[0].size()
             }
-            if(col + message.length() > Main_Board[0].size())
-                Resize_Board_cols(Main_Board, Main_Board.size(), col + message.length());
+            if(col + message.length() > Main_Board[0].size()){
+                Resize_Board_cols(Main_Board, Main_Board.size(), col + message.length());}
 
             unsigned int size_string = 0;
             for (unsigned int i = col; i < col + message.length(); i++){
@@ -52,11 +52,11 @@ namespace ariel{
         }
         else if(d == Direction::Vertical){
 
-            if(row + message.length()> Main_Board.size())
-                Resize_Board_rows(Main_Board, row + message.length() - Main_Board.size(), Main_Board[0].size());
+            if(row + message.length()> Main_Board.size()){
+                Resize_Board_rows(Main_Board, row + message.length() - Main_Board.size(), Main_Board[0].size());}
             
-            if(col > Main_Board[0].size())
-                Resize_Board_cols(Main_Board, Main_Board.size(), col);
+            if(col > Main_Board[0].size()){
+                Resize_Board_cols(Main_Board, Main_Board.size(), col);}
             
             unsigned int size_string = 0;
             for (unsigned int i = row; i < row + message.length(); i++){
@@ -104,18 +104,18 @@ namespace ariel{
 	    }
     }
 
-     void Resize_Board_rows(vector<vector<char>> &Board, unsigned int add_rows, unsigned int col ){
+     void Resize_Board_rows(vector<vector<char>> &Board, unsigned int row, unsigned int col ){
         vector<char> v (col);
         fill(v.begin(), v.end(), '_');
-        for (unsigned int  i = 0; i < add_rows; i++){
+        for (unsigned int  i = 0; i < row; i++){
             Board.push_back(v);
         }   
     }
 
-    void Resize_Board_cols(vector<vector<char>> &Board, unsigned int row, unsigned int add_col ){
+    void Resize_Board_cols(vector<vector<char>> &Board, unsigned int row, unsigned int col ){
         for (unsigned int i = 0; i < row; i++){
             unsigned int size = Board[i].size();
-            Board[i].resize(add_col);
+            Board[i].resize(col);
             fill(Board[i].begin()+size, Board[i].end(),'_');
         }
     }
