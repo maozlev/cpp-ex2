@@ -9,7 +9,7 @@ namespace ariel{
     class Board{
         
         std::vector<std::vector<char>> Main_Board{};
-        unsigned int flag;
+       
         
         public:
 
